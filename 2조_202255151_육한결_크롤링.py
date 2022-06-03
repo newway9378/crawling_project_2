@@ -70,7 +70,7 @@ for _ in range(1, 7):
                 pass
 
             if name != "NAN":
-                movie_list.append((name, rating))
+                movie_list.append((name, rating, date))
                 driver.back()
 
             else:
