@@ -68,9 +68,18 @@ for _ in range(1, 7):
             except:
                 date = "NAN"
                 pass
+            
+            try:
+                driver.execute_script(f"window.scrollTo(0, 150)")
+                time.sleep(2)
+                service = driver.find_element(By.XPATH, '//*[@id="contents"]/section[1]/div/div/ul/li/div/a/div/span[2]').text
+                print(f'---{service}---')
+            except:
+                service = "NAN"
+                pass
 
             if name != "NAN":
-                movie_list.append((name, rating, date))
+                movie_list.append((name, rating, date, service))
                 driver.back()
 
             else:
@@ -82,3 +91,8 @@ for _ in range(1, 7):
 
 print(movie_list)
 driver.quit()
+
+
+data = pd.DataFrame(movie_list, columns=['NAME', 'RATING', 'DATE', 'SERVICE'], index=range(1, len(movie_list)+1))
+new_data = data.sort_values(by=data.columns[3], ascending=False)
+new_data.to_csv('./data.csv')
